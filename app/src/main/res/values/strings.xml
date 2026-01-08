@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Markae</string>
+    <string name="my_notes">Minhas Notas</string>
+    <string name="no_notes">Ops! Nenhuma nota criada ainda…</string>
+</resources>
