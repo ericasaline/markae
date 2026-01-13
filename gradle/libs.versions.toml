@@ -14,8 +14,10 @@ materialIconsExtended = "1.7.8"
 roomRuntime = "2.8.4"
 ksp = "2.0.21-1.0.25"
 lottie = "6.3.0"
+navigationCompose = "2.9.6"
 
 [libraries]
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
