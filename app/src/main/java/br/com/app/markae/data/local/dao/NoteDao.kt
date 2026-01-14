@@ -16,11 +16,14 @@ interface NoteDao {
 	suspend fun updateNote(note: NoteEntity)
 
 	@Query("DELETE FROM NOTES WHERE ID = :id")
-	suspend fun deleteNote(id: Long)
+	suspend fun deleteNoteById(id: String)
+
+	@Query("DELETE FROM NOTES")
+	suspend fun deleteAllNotes()
 
 	@Query("SELECT * FROM NOTES WHERE ID = :id")
-	suspend fun showNote(id: Long): NoteEntity?
+	suspend fun getNoteById(id: String): NoteEntity?
 
 	@Query("SELECT * FROM NOTES")
-	suspend fun showAllNotes(): List<NoteEntity>
+	suspend fun getNotes(): List<NoteEntity>?
 }
