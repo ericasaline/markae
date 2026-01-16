@@ -94,9 +94,9 @@ fun ListNotesScreen(
 						is ViewState.Loading -> {}
 
 						is ViewState.Success -> {
-							notes.data?.let {
+							notes.data?.let { list ->
 								GridNotes(
-									notes = notes.data,
+									notes = list.sortedByDescending { it.pinned },
 									onClickNote = { id -> onClickNote(id) }
 								)
 							}
@@ -109,6 +109,9 @@ fun ListNotesScreen(
 		}
 	)
 }
+
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
