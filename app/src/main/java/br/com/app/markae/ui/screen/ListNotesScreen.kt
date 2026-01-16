@@ -1,6 +1,13 @@
 package br.com.app.markae.ui.screen
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +24,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.EditNote
@@ -44,6 +52,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.isTraversalGroup
@@ -91,7 +101,7 @@ fun ListNotesScreen(
 					when (notes) {
 						is ViewState.Error -> NoNote(text = stringResource(R.string.error_action_list_notes))
 
-						is ViewState.Loading -> {}
+						is ViewState.Loading -> LoadingGrid()
 
 						is ViewState.Success -> {
 							notes.data?.let { list ->
@@ -109,6 +119,7 @@ fun ListNotesScreen(
 		}
 	)
 }
+
 
 
 
@@ -234,6 +245,74 @@ private fun TopBar() {
 }
 
 @Composable
+private fun ShimmerCard() {
+	val shimmerColors = if (isSystemInDarkTheme()) {
+		listOf(
+			Color.DarkGray.copy(alpha = 0.9f),
+			Color.DarkGray.copy(alpha = 0.3f),
+			Color.DarkGray.copy(alpha = 0.9f)
+		)
+	} else {
+		listOf(
+			Color.LightGray.copy(alpha = 0.9f),
+			Color.LightGray.copy(alpha = 0.3f),
+			Color.LightGray.copy(alpha = 0.9f)
+		)
+	}
+	val label = stringResource(R.string.loading)
+	val transition = rememberInfiniteTransition(label = label)
+	val translateAnim = transition.animateFloat(
+		initialValue = 0f,
+		targetValue = 1000f,
+		label = label,
+		animationSpec = infiniteRepeatable(
+			animation = tween(
+				durationMillis = 1200,
+				easing = LinearEasing
+			)
+		)
+	)
+	val brush = Brush.linearGradient(
+		colors = shimmerColors,
+		start = Offset(translateAnim.value - 1000f, 0f),
+		end = Offset(translateAnim.value, 0f)
+	)
+
+	Card(
+		modifier = Modifier
+			.width(190.dp)
+			.height(210.dp)
+			.padding(12.dp),
+		shape = RoundedCornerShape(12.dp),
+		elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+		content = {
+			Box(
+				modifier = Modifier
+					.fillMaxSize()
+					.background(brush)
+			)
+		}
+	)
+}
+
+@Composable
+private fun LoadingGrid() {
+	SearchBar()
+	LazyVerticalGrid(
+		modifier = Modifier.padding(top = 16.dp),
+		columns = GridCells.Fixed(2),
+		contentPadding = PaddingValues(4.dp),
+		horizontalArrangement = Arrangement.spacedBy(2.dp),
+		verticalArrangement = Arrangement.spacedBy(2.dp),
+		content = {
+			items(2) {
+				ShimmerCard()
+			}
+		}
+	)
+}
+
+@Composable
 private fun GridNotes(
 	notes: List<Note>,
 	onClickNote: (String) -> Unit
@@ -244,19 +323,20 @@ private fun GridNotes(
 		columns = GridCells.Fixed(2),
 		contentPadding = PaddingValues(4.dp),
 		horizontalArrangement = Arrangement.spacedBy(2.dp),
-		verticalArrangement = Arrangement.spacedBy(2.dp)
-	) {
-		items(notes) { note ->
-			CardNote(
-				title = note.title,
-				content = note.content,
-				isNotePinned = note.pinned,
-				onClickNote = {
-					onClickNote.invoke(note.id.toString())
-				}
-			)
+		verticalArrangement = Arrangement.spacedBy(2.dp),
+		content = {
+			items(notes) { note ->
+				CardNote(
+					title = note.title,
+					content = note.content,
+					isNotePinned = note.pinned,
+					onClickNote = {
+						onClickNote.invoke(note.id.toString())
+					}
+				)
+			}
 		}
-	}
+	)
 }
 
 @Composable
