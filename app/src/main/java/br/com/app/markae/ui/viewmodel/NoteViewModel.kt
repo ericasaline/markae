@@ -54,7 +54,8 @@ class NoteViewModel(
 		content: String,
 		isPinned: Boolean
 	) = viewModelScope.launch {
-		val note = Note(id = id, title = title, content = content, pinned = isPinned)
+		val noteId = id?.takeIf { it.isNotEmpty() }
+		val note = Note(id = noteId, title = title, content = content, pinned = isPinned)
 
 		_actionAddEvent.emit(ViewState.Loading)
 

@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
@@ -80,6 +82,7 @@ fun NoteScreen(
 	var content = remember { mutableStateOf("") }
 	var id = remember { mutableStateOf("") }
 	var isPinned = remember { mutableStateOf(false) }
+	var readOnly = remember { mutableStateOf(false) }
 	val snackbarHostState = remember { SnackbarHostState() }
 	val sheetState = rememberModalBottomSheetState()
 	var showSheet = remember { mutableStateOf(false) }
@@ -88,14 +91,13 @@ fun NoteScreen(
 
 	ShowSnackbar(
 		state = actionAdd,
-		snackbarHostState = snackbarHostState
+		snackbarHostState = snackbarHostState,
+		onBack = { onClickBack() }
 	)
 	Scaffold(
 		topBar = {
 			TopBar(
-				onClickBack = {
-					onClickBack()
-				},
+				onClickBack = { onClickBack() },
 				onClickPin = {
 					isPinned.value = !isPinned.value
 					onClickPin()
@@ -103,12 +105,11 @@ fun NoteScreen(
 				onClickSave = {
 					keyboardController?.hide()
 					focusManager.clearFocus()
+					readOnly.value = true
 					if (title.value.isNotEmpty() || content.value.isNotEmpty())
 						onClickSave(title.value, content.value, isPinned.value)
 				},
-				onClickDelete = {
-					showSheet.value = true
-				},
+				onClickDelete = { showSheet.value = true },
 				isNotePinned = isPinned
 			)
 		},
@@ -117,43 +118,41 @@ fun NoteScreen(
 			Column(
 				modifier = Modifier
 					.padding(paddingValues)
+					.verticalScroll(rememberScrollState())
 					.fillMaxSize(),
 				content = {
+					val noteData = (note as? ViewState.Success)?.data
+
+					val initialTitle = noteData?.title.orEmpty()
+					val initialContent = noteData?.content.orEmpty()
+
 					when (note) {
 						is ViewState.Loading -> {}
 
-						is ViewState.Success -> {
-							note.data?.let { n ->
-								id.value = n.id ?: ""
-								isPinned.value = n.pinned
-
-									CreateOrEditNote(
-									showSheet = showSheet,
-									sheetState = sheetState,
-									actionDel = actionDel,
-									onClickDelete = { onClickDelete() },
-									title = title,
-									content = content,
-									initialTitle = n.title,
-									initialContent = n.content
-								)
-							}
-						}
-
-						is ViewState.Error -> {}
-
+						is ViewState.Success,
 						ViewState.Empty -> {
+							LaunchedEffect(noteData) {
+								noteData?.let { n ->
+									id.value = n.id.orEmpty()
+									isPinned.value = n.pinned
+								}
+							}
+
 							CreateOrEditNote(
 								showSheet = showSheet,
 								sheetState = sheetState,
 								actionDel = actionDel,
-								onClickDelete = { onClickDelete },
+								onClickDelete = { onClickDelete() },
+								onBack = { onClickBack() },
 								title = title,
 								content = content,
-								initialTitle = "",
-								initialContent = ""
+								initialTitle = initialTitle,
+								initialContent = initialContent,
+								readOnly = readOnly
 							)
 						}
+
+						is ViewState.Error -> {}
 					}
 				}
 			)
@@ -168,10 +167,12 @@ private fun CreateOrEditNote(
 	sheetState: SheetState,
 	actionDel: ViewState<Unit>,
 	onClickDelete: () -> Unit,
+	onBack: () -> Unit,
 	title: MutableState<String>,
 	content: MutableState<String>,
 	initialTitle: String,
-	initialContent: String
+	initialContent: String,
+	readOnly: MutableState<Boolean>,
 ) {
 	val titleState = rememberTextFieldState(initialText = initialTitle)
 	val contentState = rememberTextFieldState(initialText = initialContent)
@@ -188,9 +189,8 @@ private fun CreateOrEditNote(
 			sheetState = sheetState,
 			showSheet = showSheet,
 			state = actionDel,
-			onClickDelete = {
-				onClickDelete()
-			}
+			onBack = { onBack() },
+			onClickDelete = { onClickDelete() }
 		)
 	}
 	Column(
@@ -211,7 +211,8 @@ private fun CreateOrEditNote(
 				colors = TextFieldDefaults.colors(
 					focusedContainerColor = MaterialTheme.colorScheme.surface,
 					unfocusedContainerColor = MaterialTheme.colorScheme.surface
-				)
+				),
+				readOnly = readOnly.value
 			)
 			TextField(
 				modifier = Modifier.fillMaxWidth(),
@@ -227,7 +228,8 @@ private fun CreateOrEditNote(
 				colors = TextFieldDefaults.colors(
 					focusedContainerColor = MaterialTheme.colorScheme.surface,
 					unfocusedContainerColor = MaterialTheme.colorScheme.surface
-				)
+				),
+				readOnly = readOnly.value
 			)
 		}
 	)
@@ -341,7 +343,8 @@ private fun AppSnackbarHost(
 @Composable
 private fun ShowSnackbar(
 	state: ViewState<Unit>,
-	snackbarHostState: SnackbarHostState
+	snackbarHostState: SnackbarHostState,
+	onBack: () -> Unit
 ) {
 	val successText = stringResource(R.string.success_action)
 	val errorText = stringResource(R.string.error_action)
@@ -359,7 +362,10 @@ private fun ShowSnackbar(
 			actionLabel = closeButtonText
 		)
 
-		if (result == SnackbarResult.ActionPerformed) snackbarHostState.currentSnackbarData?.dismiss()
+		if (result == SnackbarResult.ActionPerformed) {
+			snackbarHostState.currentSnackbarData?.dismiss()
+			onBack.invoke()
+		}
 	}
 }
 
@@ -392,7 +398,7 @@ private fun BottomSheet(
 							Icon(
 								modifier = Modifier.size(42.dp),
 								imageVector = icon,
-								contentDescription = null
+								contentDescription = stringResource(R.string.atention)
 							)
 							Spacer(modifier = Modifier.height(8.dp))
 							Text(
@@ -451,7 +457,8 @@ private fun ShowBottomSheet(
 	state: ViewState<Unit>,
 	showSheet: MutableState<Boolean>,
 	sheetState: SheetState,
-	onClickDelete: () -> Unit
+	onClickDelete: () -> Unit,
+	onBack: () -> Unit,
 ) {
 	val coroutineScope = rememberCoroutineScope()
 
@@ -473,7 +480,10 @@ private fun ShowBottomSheet(
 				button1stText = stringResource(R.string.close),
 				showSheet = showSheet,
 				sheetState = sheetState,
-				onClick1stButton = { coroutineScope.launch { showSheet.value = false } },
+				onClick1stButton = {
+					coroutineScope.launch { showSheet.value = false }
+					onBack()
+				},
 				icon = Icons.Rounded.AutoAwesome
 			)
 		}

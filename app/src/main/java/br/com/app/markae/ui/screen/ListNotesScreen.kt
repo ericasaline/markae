@@ -67,24 +67,17 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 fun ListNotesScreen(
 	onClickNote: (String) -> Unit,
 	onClickCreateNote: () -> Unit,
-	notes: ViewState<List<Note>?>,
+	notes: ViewState<List<Note>?>
 ) {
-	var mustShowTopBar = false
-	var mustShowSearchBar = true
-
 	Scaffold(
-		topBar = {
-			TopBar()
-		},
+		topBar = { TopBar() },
 		floatingActionButton = {
 			FloatingActionButton(
-				onClick = {
-					onClickCreateNote()
-				},
+				onClick = { onClickCreateNote() },
 				content = {
 					Icon(
 						imageVector = Icons.Filled.Edit,
-						contentDescription = null
+						contentDescription = stringResource(R.string.create_note)
 					)
 				}
 			)
@@ -97,24 +90,19 @@ fun ListNotesScreen(
 				content = {
 					when (notes) {
 						is ViewState.Error -> NoNote(text = stringResource(R.string.error_action_list_notes))
-						ViewState.Loading -> {
 
-							// tela de loanding
+						is ViewState.Loading -> {}
 
-						}
 						is ViewState.Success -> {
-							if (notes.data.isNullOrEmpty()) NoNote(text = stringResource(R.string.no_notes))
-							 else {
+							notes.data?.let {
 								GridNotes(
 									notes = notes.data,
-									onClickNote = { id ->
-										onClickNote(id)
-									}
+									onClickNote = { id -> onClickNote(id) }
 								)
 							}
 						}
 
-						ViewState.Empty -> {}
+						is ViewState.Empty -> NoNote(text = stringResource(R.string.no_notes))
 					}
 				}
 			)
@@ -206,6 +194,12 @@ fun SearchBar() {
 	)
 }
 
+
+
+
+
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TopBar() {
@@ -226,7 +220,7 @@ private fun TopBar() {
 				Icon(
 					modifier = Modifier.size(32.dp),
 					imageVector =  Icons.Filled.EditNote,
-					contentDescription = null
+					contentDescription = stringResource(R.string.app_name)
 				)
 			}
 		},
@@ -299,12 +293,11 @@ private fun CardNote(
 								Icon(
 									modifier = Modifier.size(16.dp),
 									imageVector = Icons.Filled.PushPin,
-									contentDescription = null
+									contentDescription = stringResource(R.string.pin)
 								)
 							}
 						}
 					)
-
 					Spacer(modifier = Modifier.height(8.dp))
 					Text(
 						text = content,

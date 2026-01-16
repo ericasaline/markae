@@ -1,10 +1,7 @@
 <resources>
     <string name="app_name">markae</string>
-    <string name="no_notes">Oops:( \n Nenhuma nota criada ainda!</string>
     <string name="title">Título</string>
     <string name="content">Conteúdo</string>
-    <string name="search_note">Pesquisar por nota</string>
-    <string name="search_results">Resultados para "%1$s"</string>
     <string name="back">Voltar</string>
     <string name="unpin">Desfixar</string>
     <string name="pin">Fixar</string>
@@ -12,9 +9,14 @@
     <string name="delete">Excluir</string>
     <string name="close">Fechar</string>
     <string name="cancel">Cancelar</string>
+    <string name="ok">OK</string>
+    <string name="atention">Atenção!</string>
+    <string name="create_note">Criar nota</string>
+    <string name="search_note">Pesquisar por nota</string>
+    <string name="search_results">Resultados para "%1$s"</string>
     <string name="success_action">Ação realizada com sucesso :)</string>
     <string name="error_action">Erro ao executar ação :(</string>
     <string name="error_action_list_notes">Erro ao listar suas notas :(</string>
-    <string name="ok">OK</string>
+    <string name="no_notes">Oops:( \n Nenhuma nota criada ainda!</string>
     <string name="delete_note_question">Deseja realmente deletar essa nota?\nEssa ação não poderá ser desfeita!</string>
 </resources>

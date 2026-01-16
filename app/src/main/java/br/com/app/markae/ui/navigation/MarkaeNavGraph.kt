@@ -4,6 +4,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -34,6 +35,8 @@ fun MarkaeNavGraph() {
 			route = LIST_NOTES_SCREEN
 		) {
 			val listNotesViewModel = koinViewModel<ListNotesViewModel>()
+
+			LaunchedEffect(Unit) { listNotesViewModel.listNotes() }
 
 			ListNotesScreen(
 				notes = listNotesViewModel.notes.collectAsState().value,

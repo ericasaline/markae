@@ -13,14 +13,12 @@ class ListNotesViewModel(
 	private val listNotesUseCase: GetAllNotesUseCase
 ): ViewModel() {
 
-	init { listNotes() }
-
 	private val _notes = MutableStateFlow<ViewState<List<Note>?>>(ViewState.Loading)
 	val notes: StateFlow<ViewState<List<Note>?>> = _notes
 
-	private fun listNotes() = viewModelScope.launch {
+	 fun listNotes() = viewModelScope.launch {
 		listNotesUseCase()
-			.onSuccess { notes -> _notes.value = ViewState.Success(notes) }
+			.onSuccess { list -> list?.let{ _notes.value = if (it.isEmpty()) ViewState.Empty else ViewState.Success(list) } }
 			.onFailure { error -> _notes.value = ViewState.Error(error) }
 	}
 }
