@@ -1,4 +1,5 @@
 # 📝 markae: Aplicativo de Notas
+![markae](https://github.com/user-attachments/assets/6ec00bd6-357b-4421-ba51-58ba08972d96)
 
 ## 📸 Screenshots:
 
