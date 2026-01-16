@@ -13,10 +13,10 @@
 ## 🛠️ Contrução até aqui:
 - [x] Config inicial
 - [ ] Listar notas
-- [ ] Criação e edição de notas
-- [ ] Exclusão de notas
+- [x] Criação e edição de notas
+- [x] Exclusão de notas
 - [ ] Busca de notas
-- [ ] Fixar notas ao topo
+- [ ] Fixar notas ao topo da lista
 - [ ] Melhorias
 
 ## ⚗️ Tecnologias utilizadas:
