@@ -29,7 +29,7 @@ fun MarkaeNavGraph() {
 			enterTransition = {
 				slideInHorizontally(
 					initialOffsetX = { it },
-					animationSpec = tween(1500)
+					animationSpec = tween(1000)
 				)
 			},
 			route = LIST_NOTES_SCREEN
@@ -61,13 +61,13 @@ fun MarkaeNavGraph() {
 			enterTransition = {
 				slideInHorizontally(
 					initialOffsetX = { it },
-					animationSpec = tween(1500)
+					animationSpec = tween(1000)
 				)
 			},
 			popExitTransition = {
 				slideOutHorizontally(
 					targetOffsetX = { it },
-					animationSpec = tween(1500)
+					animationSpec = tween(1000)
 				)
 			}
 		) {

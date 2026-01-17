@@ -9,6 +9,8 @@
     <string name="delete">Excluir</string>
     <string name="close">Fechar</string>
     <string name="cancel">Cancelar</string>
+    <string name="search">Pesquisar</string>
+    <string name="clear">Limpar</string>
     <string name="ok">OK</string>
     <string name="atention">Atenção!</string>
     <string name="loading">Carregando</string>
