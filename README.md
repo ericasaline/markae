@@ -1,5 +1,6 @@
 # 📝 markae: Aplicativo de Notas
-![markae](https://github.com/user-attachments/assets/6ec00bd6-357b-4421-ba51-58ba08972d96)
+![markae](https://github.com/user-attachments/assets/767ec94e-51fb-46de-a0e6-d1ddc6caeb03)
+![markae Dark Theme](https://github.com/user-attachments/assets/e0c68823-f428-432b-9842-dc97c94b8e11)
 
 ## ✨ Funcionalidades:
 - ✏️ Criar, compartilhar, editar e excluir notas
