@@ -1,7 +1,7 @@
 package br.com.app.markae.ui.screen.component
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.PushPin
@@ -34,7 +34,7 @@ fun TopBarActionComponent(
 			IconButton(
 				content = {
 					Icon(
-						imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+						imageVector = Icons.Default.ArrowBackIosNew,
 						contentDescription = stringResource(R.string.back)
 					)
 				},

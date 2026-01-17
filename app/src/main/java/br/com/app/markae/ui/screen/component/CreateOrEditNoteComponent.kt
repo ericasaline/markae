@@ -73,7 +73,6 @@ fun CreateOrEditNoteComponent(
 				colors = TextFieldDefaults.colors(
 					focusedContainerColor = MaterialTheme.colorScheme.surface,
 					unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-					focusedIndicatorColor = Color.Transparent,
 					unfocusedIndicatorColor = Color.Transparent
 				),
 				readOnly = readOnly.value
@@ -92,7 +91,6 @@ fun CreateOrEditNoteComponent(
 				colors = TextFieldDefaults.colors(
 					focusedContainerColor = MaterialTheme.colorScheme.surface,
 					unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-					focusedIndicatorColor = Color.Transparent,
 					unfocusedIndicatorColor = Color.Transparent
 				),
 				readOnly = readOnly.value

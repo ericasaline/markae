@@ -3,10 +3,6 @@ package br.com.app.markae.ui.screen
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -21,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import br.com.app.markae.R
 import br.com.app.markae.core.states.ViewState
 import br.com.app.markae.domain.model.Note
+import br.com.app.markae.ui.screen.component.FABMenuComponent
 import br.com.app.markae.ui.screen.component.GridNotesComponent
 import br.com.app.markae.ui.screen.component.LoadingGrid
 import br.com.app.markae.ui.screen.component.NoNoteComponent
@@ -38,14 +35,19 @@ fun ListNotesScreen(
 			TopBarNoActionComponent()
 		},
 		floatingActionButton = {
-			FloatingActionButton(
-				onClick = { onClickCreateNote() },
-				content = {
-					Icon(
-						imageVector = Icons.Filled.Edit,
-						contentDescription = stringResource(R.string.create_note)
-					)
-				}
+//			FloatingActionButton(
+//				onClick = { onClickCreateNote() },
+//				content = {
+//					Icon(
+//						imageVector = Icons.Filled.Edit,
+//						contentDescription = stringResource(R.string.create_note)
+//					)
+//				}
+//			)
+			FABMenuComponent(
+				onCreateClick = { onClickCreateNote() },
+				onDeleteAllClick = {},
+				onOrderClick = {}
 			)
 		},
 		content = { paddingValues ->
@@ -71,14 +73,40 @@ fun ListNotesScreen(
 									}
 								}
 
-								SearchNoteComponent(
-									items = sortedNotes,
-									onItemClick = { n -> query = n.title },
-									onClearQuery = { query = "" }
-								)
-								GridNotesComponent(
-									notes = filteredNotes,
-									onClickNote = { id -> onClickNote(id) }
+								Column(
+									content = {
+										SearchNoteComponent(
+											items = sortedNotes,
+											onItemClick = { n -> query = n.title },
+											onClearQuery = { query = "" }
+										)
+//										Row(
+//											modifier = Modifier
+//												.fillMaxWidth()
+//												.padding(top = 16.dp),
+//											verticalAlignment = Alignment.CenterVertically,
+//											content = {
+//												Spacer(modifier = Modifier.weight(1f))
+//												Text(
+//													style = MaterialTheme.typography.bodySmall,
+//													text = stringResource(R.string.order)
+//												)
+//												IconButton(
+//													content = {
+//														Icon(
+//															imageVector = Icons.AutoMirrored.Filled.Sort,
+//															contentDescription = stringResource(R.string.order)
+//														)
+//													},
+//													onClick = {}
+//												)
+//											}
+//										)
+										GridNotesComponent(
+											notes = filteredNotes,
+											onClickNote = { id -> onClickNote(id) }
+										)
+									}
 								)
 							}
 						}

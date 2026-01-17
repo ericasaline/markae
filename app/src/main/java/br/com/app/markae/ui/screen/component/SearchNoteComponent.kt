@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.Cancel
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -81,7 +81,7 @@ fun SearchNoteComponent(
 									},
 									content = {
 										Icon(
-											imageVector = Icons.Rounded.Clear,
+											imageVector = Icons.Rounded.Cancel,
 											contentDescription = stringResource(R.string.clear)
 										)
 									}

@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.EditNote
+import androidx.compose.material.icons.filled.BorderColor
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -39,8 +39,8 @@ fun TopBarNoActionComponent() {
 				)
 				Spacer(modifier = Modifier.weight(1f))
 				Icon(
-					modifier = Modifier.size(32.dp),
-					imageVector =  Icons.Filled.EditNote,
+					modifier = Modifier.size(24.dp),
+					imageVector = Icons.Default.BorderColor,
 					contentDescription = stringResource(R.string.app_name)
 				)
 			}

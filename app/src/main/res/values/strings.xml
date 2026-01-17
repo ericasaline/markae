@@ -7,12 +7,15 @@
     <string name="pin">Fixar</string>
     <string name="save">Salvar</string>
     <string name="delete">Excluir</string>
+    <string name="delete_all">Excluir Tudo</string>
     <string name="close">Fechar</string>
     <string name="cancel">Cancelar</string>
     <string name="search">Pesquisar</string>
     <string name="clear">Limpar</string>
     <string name="share">Compartilhar</string>
+    <string name="order">Ordenar</string>
     <string name="ok">OK</string>
+    <string name="menu">Menu</string>
     <string name="atention">Atenção!</string>
     <string name="loading">Carregando</string>
     <string name="create_note">Criar nota</string>
