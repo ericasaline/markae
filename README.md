@@ -13,9 +13,12 @@
 - [x] Listar notas
 - [x] Criação e edição de notas
 - [x] Exclusão de notas
-- [ ] Busca de notas
-- [ ] Fixar notas ao topo da lista
-- [ ] Melhorias
+- [x] Busca de notas
+- [x] Compartilhar notas
+- [x] Fixar notas ao topo da lista
+- [ ] Ordenar Lista
+- [ ] Testes Unitários
+- [ ] Testes Instrumentados
 
 ## ⚗️ Tecnologias utilizadas:
 - Jetpack Compose
