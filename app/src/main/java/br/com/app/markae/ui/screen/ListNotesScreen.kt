@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.app.markae.R
-import br.com.app.markae.core.states.ViewState
+import br.com.app.markae.core.state.ViewState
 import br.com.app.markae.domain.model.Note
 import br.com.app.markae.ui.screen.component.FABMenuComponent
 import br.com.app.markae.ui.screen.component.GridNotesComponent

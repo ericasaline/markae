@@ -11,7 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import br.com.app.markae.core.states.ViewState
+import br.com.app.markae.core.state.ViewState
 import br.com.app.markae.ui.navigation.route.MarkaeRoutes.LIST_NOTES_SCREEN
 import br.com.app.markae.ui.navigation.route.MarkaeRoutes.NOTE_SCREEN
 import br.com.app.markae.ui.screen.ListNotesScreen
@@ -87,8 +87,8 @@ fun MarkaeNavGraph() {
 					noteViewModel.delNote()
 				},
 				note = noteViewModel.note.collectAsState(initial = ViewState.Loading).value,
-				actionAdd = noteViewModel.actionAddEvent.collectAsState(initial = ViewState.Loading).value,
-				actionDel = noteViewModel.actionDelEvent.collectAsState(initial = ViewState.Loading).value
+				actionAdd = noteViewModel.addAction.collectAsState(initial = ViewState.Loading).value,
+				actionDel = noteViewModel.delAction.collectAsState(initial = ViewState.Loading).value
 			)
 		}
 	}

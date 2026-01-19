@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.app.markae.core.states.ViewState
+import br.com.app.markae.core.state.ViewState
 import br.com.app.markae.core.utils.shareText
 import br.com.app.markae.domain.model.Note
 import br.com.app.markae.ui.screen.component.AppSnackbarHost
@@ -66,17 +66,19 @@ fun NoteScreen(
 				},
 				onClickPin = {
 					isPinned.value = !isPinned.value
-					onClickPin()
+					if (title.value.isNotEmpty() || content.value.isNotEmpty()) onClickPin()
 				},
 				onClickSave = {
 					keyboardController?.hide()
 					focusManager.clearFocus()
-					readOnly.value = true
-					if (title.value.isNotEmpty() || content.value.isNotEmpty())
+					if (title.value.isNotEmpty() || content.value.isNotEmpty()) {
+						readOnly.value = true
 						onClickSave(title.value, content.value, isPinned.value)
+					}
 				},
 				onClickDelete = { showSheet.value = true },
-				isNotePinned = isPinned
+				isNotePinned = isPinned,
+				readOnly = readOnly
 			)
 		},
 		snackbarHost = { AppSnackbarHost(snackbarHostState) },

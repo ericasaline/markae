@@ -1,5 +1,6 @@
 package br.com.app.markae.ui.screen.component
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,9 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,11 +27,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import br.com.app.markae.R
-import br.com.app.markae.core.states.ViewState
+import br.com.app.markae.core.state.ViewState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -122,6 +122,7 @@ private fun BottomSheet(
 fun ShowBottomSheet(
 	state: ViewState<Unit>,
 	showSheet: MutableState<Boolean>,
+	readOnly: MutableState<Boolean>,
 	sheetState: SheetState,
 	onClickDelete: () -> Unit,
 	onBack: () -> Unit,
@@ -130,28 +131,21 @@ fun ShowBottomSheet(
 
 	when (state) {
 		is ViewState.Error -> {
-			BottomSheet(
-				message = stringResource(R.string.error_action),
-				button1stText = stringResource(R.string.close),
-				showSheet = showSheet,
-				sheetState = sheetState,
-				onClick1stButton = { coroutineScope.launch { showSheet.value = false } },
-				icon = Icons.Filled.Error
-			)
+			Toast.makeText(
+				LocalContext.current,
+				stringResource(R.string.error_action),
+				Toast.LENGTH_SHORT)
+			.show()
+			onBack()
 		}
 
 		is ViewState.Success<*> -> {
-			BottomSheet(
-				message = stringResource(R.string.success_action),
-				button1stText = stringResource(R.string.close),
-				showSheet = showSheet,
-				sheetState = sheetState,
-				onClick1stButton = {
-					coroutineScope.launch { showSheet.value = false }
-					onBack()
-				},
-				icon = Icons.Rounded.AutoAwesome
-			)
+			Toast.makeText(
+				LocalContext.current,
+				stringResource(R.string.success_action),
+				Toast.LENGTH_SHORT)
+			.show()
+			onBack()
 		}
 
 		ViewState.Loading -> {
@@ -161,8 +155,14 @@ fun ShowBottomSheet(
 				button2ndText = stringResource(R.string.delete),
 				showSheet = showSheet,
 				sheetState = sheetState,
-				onClick1stButton = { coroutineScope.launch { showSheet.value = false } },
-				onClick2ndButton = { onClickDelete() },
+				onClick1stButton = {
+					readOnly.value = false
+					coroutineScope.launch { showSheet.value = false }
+				},
+				onClick2ndButton = {
+					readOnly.value = true
+					onClickDelete()
+				},
 				icon = Icons.Filled.Info
 			)
 		}

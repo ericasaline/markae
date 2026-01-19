@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.com.app.markae.R
-import br.com.app.markae.core.states.ViewState
+import br.com.app.markae.core.state.ViewState
 
 @Composable
 fun ShowSnackBar(
@@ -67,8 +67,7 @@ fun AppSnackbarHost(
 					.fillMaxWidth()
 					.padding(16.dp)
 					.clip(RoundedCornerShape(12.dp))
-					.background(MaterialTheme.colorScheme.primaryContainer)
-					.padding(16.dp),
+					.background(MaterialTheme.colorScheme.primaryContainer),
 				content = {
 					Row(
 						verticalAlignment = Alignment.CenterVertically,

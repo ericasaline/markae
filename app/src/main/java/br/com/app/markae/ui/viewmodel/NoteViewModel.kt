@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.app.markae.core.states.ViewState
+import br.com.app.markae.core.state.ViewState
 import br.com.app.markae.domain.model.Note
 import br.com.app.markae.domain.usecase.DeleteNoteUseCase
 import br.com.app.markae.domain.usecase.GetNoteUseCase
@@ -26,11 +26,11 @@ class NoteViewModel(
 	savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
-	private val _actionAddEvent = MutableSharedFlow<ViewState<Unit>>()
-	val actionAddEvent: SharedFlow<ViewState<Unit>> = _actionAddEvent
+	private val _addAction = MutableSharedFlow<ViewState<Unit>>()
+	val addAction: SharedFlow<ViewState<Unit>> = _addAction
 
-	private val _actionDelEvent = MutableSharedFlow<ViewState<Unit>>()
-	val actionDelEvent: SharedFlow<ViewState<Unit>> = _actionDelEvent
+	private val _delAction = MutableSharedFlow<ViewState<Unit>>()
+	val delAction: SharedFlow<ViewState<Unit>> = _delAction
 
 	private val _note = MutableStateFlow<ViewState<Note?>>(ViewState.Loading)
 	val note: StateFlow<ViewState<Note?>> = _note
@@ -57,27 +57,27 @@ class NoteViewModel(
 		val noteId = id?.takeIf { it.isNotEmpty() }
 		val note = Note(id = noteId, title = title, content = content, pinned = isPinned)
 
-		_actionAddEvent.emit(ViewState.Loading)
+		_addAction.emit(ViewState.Loading)
 
 		val operation: suspend (Note) -> Result<Unit> = { n ->
 			if (id.isNullOrEmpty()) insertNoteUseCase(n) else updateNoteUseCase(n)
 		}
 
 		operation(note)
-			.onSuccess { _actionAddEvent.emit(ViewState.Success(Unit)) }
-			.onFailure { _actionAddEvent.emit(ViewState.Error(throwable = it)) }
+			.onSuccess { _addAction.emit(ViewState.Success(Unit)) }
+			.onFailure { _addAction.emit(ViewState.Error(throwable = it)) }
 	}
 
 	fun delNote() = viewModelScope.launch {
-		_actionDelEvent.emit(ViewState.Loading)
+		_delAction.emit(ViewState.Loading)
 		deleteNoteUseCase(id ?: "")
-			.onSuccess { _actionDelEvent.emit(ViewState.Success(Unit)) }
-			.onFailure { _actionDelEvent.emit(ViewState.Error(throwable = it)) }
+			.onSuccess { _delAction.emit(ViewState.Success(Unit)) }
+			.onFailure { _delAction.emit(ViewState.Error(throwable = it)) }
 	}
 
 	fun pinNote() = viewModelScope.launch {
 		togglePinUseCase(id ?: "")
-			.onSuccess { Log.d("INFO", "Sucesso em: pinNote()") }
-			.onFailure { e -> Log.d("INFO", "Erro $e em: pinNote()") }
+			.onSuccess { Log.i("INFO", "Sucesso em: pinNote()") }
+			.onFailure { e -> Log.i("INFO", "Erro $e em: pinNote()") }
 	}
 }

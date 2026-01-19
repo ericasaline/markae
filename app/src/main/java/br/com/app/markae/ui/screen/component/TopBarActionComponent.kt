@@ -26,7 +26,8 @@ fun TopBarActionComponent(
 	onClickShare: () -> Unit,
 	onClickSave: () -> Unit,
 	onClickDelete: () -> Unit,
-	isNotePinned: MutableState<Boolean>
+	isNotePinned: MutableState<Boolean>,
+	readOnly: MutableState<Boolean>
 ) {
 	TopAppBar(
 		title = {},
@@ -49,7 +50,8 @@ fun TopBarActionComponent(
 						contentDescription = if (isNotePinned.value) stringResource(R.string.unpin) else stringResource(R.string.pin)
 					)
 				},
-				onClick = { onClickPin.invoke() }
+				onClick = { onClickPin.invoke() },
+				enabled = !readOnly.value
 			)
 			IconButton(
 				content = {
@@ -58,7 +60,8 @@ fun TopBarActionComponent(
 						contentDescription = stringResource(R.string.share)
 					)
 				},
-				onClick = { onClickShare.invoke() }
+				onClick = { onClickShare.invoke() },
+				enabled = !readOnly.value
 			)
 			IconButton(
 				content = {
@@ -67,7 +70,8 @@ fun TopBarActionComponent(
 						contentDescription = stringResource(R.string.save)
 					)
 				},
-				onClick = { onClickSave.invoke() }
+				onClick = { onClickSave.invoke() },
+				enabled = !readOnly.value
 			)
 			IconButton(
 				content = {
@@ -76,7 +80,8 @@ fun TopBarActionComponent(
 						contentDescription = stringResource(R.string.delete)
 					)
 				},
-				onClick = { onClickDelete.invoke() }
+				onClick = { onClickDelete.invoke() },
+				enabled = !readOnly.value
 			)
 		},
 		colors = TopAppBarDefaults.topAppBarColors(

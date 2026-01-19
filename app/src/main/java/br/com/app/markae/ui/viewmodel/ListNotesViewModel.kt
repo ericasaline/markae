@@ -2,7 +2,7 @@ package br.com.app.markae.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.app.markae.core.states.ViewState
+import br.com.app.markae.core.state.ViewState
 import br.com.app.markae.domain.model.Note
 import br.com.app.markae.domain.usecase.GetAllNotesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.com.app.markae.R
-import br.com.app.markae.core.states.ViewState
+import br.com.app.markae.core.state.ViewState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,7 +34,7 @@ fun CreateOrEditNoteComponent(
 	content: MutableState<String>,
 	initialTitle: String,
 	initialContent: String,
-	readOnly: MutableState<Boolean>,
+	readOnly: MutableState<Boolean>
 ) {
 	val titleState = rememberTextFieldState(initialText = initialTitle)
 	val contentState = rememberTextFieldState(initialText = initialContent)
@@ -50,6 +50,7 @@ fun CreateOrEditNoteComponent(
 		ShowBottomSheet(
 			sheetState = sheetState,
 			showSheet = showSheet,
+			readOnly = readOnly,
 			state = actionDel,
 			onBack = { onBack() },
 			onClickDelete = { onClickDelete() }

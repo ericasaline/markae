@@ -1,4 +1,4 @@
-package br.com.app.markae.core.states
+package br.com.app.markae.core.state
 
 sealed class ViewState<out T> {
 	object Loading : ViewState<Nothing>()
