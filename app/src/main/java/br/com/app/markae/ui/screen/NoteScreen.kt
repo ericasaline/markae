@@ -18,8 +18,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.app.markae.core.state.ViewState
-import br.com.app.markae.core.utils.shareText
+import br.com.app.markae.common.state.ViewState
+import br.com.app.markae.common.utils.shareText
 import br.com.app.markae.domain.model.Note
 import br.com.app.markae.ui.screen.component.AppSnackbarHost
 import br.com.app.markae.ui.screen.component.CreateOrEditNoteComponent

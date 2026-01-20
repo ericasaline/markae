@@ -1,4 +1,4 @@
-package br.com.app.markae.core.utils
+package br.com.app.markae.common.utils
 
 suspend fun <T> safeCall(
 	action: suspend () -> T

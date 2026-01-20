@@ -46,6 +46,6 @@ val useCaseModule = module {
 }
 
 val viewModelModule = module {
-	viewModel { ListNotesViewModel(get()) }
+	viewModel { ListNotesViewModel(get(), get()) }
 	viewModel { NoteViewModel(get(), get(), get(), get(), get(), get()) }
 }

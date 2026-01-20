@@ -50,7 +50,7 @@ fun FABMenuComponent(
 						visible = expanded,
 						content = {
 							ExtendedFloatingActionButton(
-								onClick = onDeleteAllClick,
+								onClick = { onDeleteAllClick.invoke() },
 								icon = {
 									Icon(
 										imageVector = Icons.Default.Delete,

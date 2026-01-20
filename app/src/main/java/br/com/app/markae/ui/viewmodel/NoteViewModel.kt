@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.app.markae.core.state.ViewState
+import br.com.app.markae.common.state.ViewState
 import br.com.app.markae.domain.model.Note
 import br.com.app.markae.domain.usecase.DeleteNoteUseCase
 import br.com.app.markae.domain.usecase.GetNoteUseCase
@@ -43,7 +43,6 @@ class NoteViewModel(
 	}
 
 	private fun loadNote(id: String) = viewModelScope.launch {
-		_note.emit(ViewState.Loading)
 		getNoteUseCase(id)
 			.onSuccess { note -> if (note != null) _note.value = ViewState.Success(note) }
 			.onFailure { error -> _note.value = ViewState.Error(error) }
@@ -70,6 +69,7 @@ class NoteViewModel(
 
 	fun delNote() = viewModelScope.launch {
 		_delAction.emit(ViewState.Loading)
+
 		deleteNoteUseCase(id ?: "")
 			.onSuccess { _delAction.emit(ViewState.Success(Unit)) }
 			.onFailure { _delAction.emit(ViewState.Error(throwable = it)) }

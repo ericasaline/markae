@@ -42,7 +42,7 @@ fun GridNotesComponent(
 		horizontalArrangement = Arrangement.spacedBy(2.dp),
 		verticalArrangement = Arrangement.spacedBy(2.dp),
 		content = {
-			items(notes) { note ->
+			items(items = notes, key = { note -> note.id.toString() }) { note ->
 				CardNote(
 					title = note.title,
 					content = note.content,

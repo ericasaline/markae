@@ -32,7 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import br.com.app.markae.R
-import br.com.app.markae.core.state.ViewState
+import br.com.app.markae.common.state.ViewState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

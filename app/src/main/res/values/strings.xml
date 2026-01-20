@@ -26,4 +26,5 @@
     <string name="error_action_list_notes">Erro ao listar suas notas :(</string>
     <string name="no_notes">Oops:( \n Nenhuma nota criada ainda!</string>
     <string name="delete_note_question">Deseja realmente deletar essa nota?\nEssa ação não poderá ser desfeita!</string>
+    <string name="delete_all_notes_question">Deseja realmente deletar todas as notas? Essa ação não poderá ser desfeita!</string>
 </resources>

@@ -1,4 +1,4 @@
-package br.com.app.markae.core.utils
+package br.com.app.markae.common.utils
 
 import android.content.Context
 import android.content.Intent

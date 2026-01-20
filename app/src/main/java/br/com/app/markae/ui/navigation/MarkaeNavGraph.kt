@@ -5,13 +5,13 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import br.com.app.markae.core.state.ViewState
+import br.com.app.markae.common.state.ViewState
 import br.com.app.markae.ui.navigation.route.MarkaeRoutes.LIST_NOTES_SCREEN
 import br.com.app.markae.ui.navigation.route.MarkaeRoutes.NOTE_SCREEN
 import br.com.app.markae.ui.screen.ListNotesScreen
@@ -39,12 +39,15 @@ fun MarkaeNavGraph() {
 			LaunchedEffect(Unit) { listNotesViewModel.listNotes() }
 
 			ListNotesScreen(
-				notes = listNotesViewModel.notes.collectAsState().value,
+				notes = listNotesViewModel.notes.collectAsStateWithLifecycle().value,
 				onClickNote = { id ->
 					navController.navigate(route = NOTE_SCREEN.replace("{id}", id))
 				},
 				onClickCreateNote = {
 					navController.navigate(route = NOTE_SCREEN.replace("{id}", ""))
+				},
+				onClickDeleteAll = {
+					listNotesViewModel.deleteAllNotes()
 				}
 			)
 		}
@@ -86,9 +89,9 @@ fun MarkaeNavGraph() {
 				onClickDelete = {
 					noteViewModel.delNote()
 				},
-				note = noteViewModel.note.collectAsState(initial = ViewState.Loading).value,
-				actionAdd = noteViewModel.addAction.collectAsState(initial = ViewState.Loading).value,
-				actionDel = noteViewModel.delAction.collectAsState(initial = ViewState.Loading).value
+				note = noteViewModel.note.collectAsStateWithLifecycle().value,
+				actionAdd = noteViewModel.addAction.collectAsStateWithLifecycle(initialValue = ViewState.Loading).value,
+				actionDel = noteViewModel.delAction.collectAsStateWithLifecycle(initialValue = ViewState.Loading).value
 			)
 		}
 	}

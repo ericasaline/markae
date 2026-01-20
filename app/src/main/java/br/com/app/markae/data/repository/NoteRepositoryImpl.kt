@@ -1,6 +1,6 @@
 package br.com.app.markae.data.repository
 
-import br.com.app.markae.core.utils.safeCall
+import br.com.app.markae.common.utils.safeCall
 import br.com.app.markae.data.local.dao.NoteDao
 import br.com.app.markae.domain.model.Note
 import br.com.app.markae.domain.repository.NoteRepository

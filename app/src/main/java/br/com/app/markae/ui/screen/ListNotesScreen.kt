@@ -15,8 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.app.markae.R
-import br.com.app.markae.core.state.ViewState
+import br.com.app.markae.common.state.ViewState
 import br.com.app.markae.domain.model.Note
+import br.com.app.markae.ui.screen.component.AlertDialogComponent
 import br.com.app.markae.ui.screen.component.FABMenuComponent
 import br.com.app.markae.ui.screen.component.GridNotesComponent
 import br.com.app.markae.ui.screen.component.LoadingGrid
@@ -28,25 +29,17 @@ import br.com.app.markae.ui.screen.component.TopBarNoActionComponent
 fun ListNotesScreen(
 	onClickNote: (String) -> Unit,
 	onClickCreateNote: () -> Unit,
+	onClickDeleteAll: () -> Unit,
 	notes: ViewState<List<Note>?>
 ) {
+	var showDialog = remember { mutableStateOf(false) }
+
 	Scaffold(
-		topBar = {
-			TopBarNoActionComponent()
-		},
+		topBar = { TopBarNoActionComponent() },
 		floatingActionButton = {
-//			FloatingActionButton(
-//				onClick = { onClickCreateNote() },
-//				content = {
-//					Icon(
-//						imageVector = Icons.Filled.Edit,
-//						contentDescription = stringResource(R.string.create_note)
-//					)
-//				}
-//			)
 			FABMenuComponent(
 				onCreateClick = { onClickCreateNote() },
-				onDeleteAllClick = {},
+				onDeleteAllClick = { showDialog.value = true },
 				onOrderClick = {}
 			)
 		},
@@ -56,6 +49,11 @@ fun ListNotesScreen(
 					.padding(paddingValues)
 					.fillMaxSize(),
 				content = {
+					if (showDialog.value) AlertDialogComponent(
+						onDeleteAll = { onClickDeleteAll() },
+						showDialog = showDialog
+					)
+
 					when (notes) {
 						is ViewState.Error -> NoNoteComponent(text = stringResource(R.string.error_action_list_notes))
 
@@ -125,6 +123,7 @@ private fun HomeScreenPreview() {
 	ListNotesScreen(
 		notes = ViewState.Error(),
 		onClickNote = {},
-		onClickCreateNote = {}
+		onClickCreateNote = {},
+		onClickDeleteAll = {}
 	)
 }
