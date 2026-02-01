@@ -24,8 +24,9 @@
 ## ⚗️ Tecnologias utilizadas:
 - Jetpack Compose
 - Kotlin
-- Arquitetura MVVM
-- Room (Persistência local)
+- MVVM
+- Clean Architecture
+- Room
 - Flow
 - Coroutines
 

@@ -9,13 +9,17 @@ object NoteMapper {
 		id = this.id ?: UUID.randomUUID().toString(),
 		title = this.title,
 		content = this.content,
-		pinned = this.pinned
+		pinned = this.pinned,
+		createdAt = this.createdAt,
+		updatedAt = this.updatedAt
 	)
 
 	fun NoteEntity?.toDomain() = Note(
 		id = this?.id,
 		title = this?.title ?: "",
 		content = this?.content ?: "",
-		pinned = this?.pinned == true
+		pinned = this?.pinned == true,
+		createdAt = this?.createdAt ?: 0,
+		updatedAt = this?.updatedAt
 	)
 }

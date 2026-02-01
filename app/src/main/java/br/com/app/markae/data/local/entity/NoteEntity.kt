@@ -14,5 +14,9 @@ data class NoteEntity(
 	@ColumnInfo(name = "CONTENT")
 	val content: String,
 	@ColumnInfo(name = "PINNED")
-	val pinned: Boolean = false
+	val pinned: Boolean = false,
+	@ColumnInfo(name = "CREATED_AT")
+	val createdAt: Long,
+	@ColumnInfo(name = "UPDATED_AT")
+	val updatedAt: Long?
 )

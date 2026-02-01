@@ -13,11 +13,14 @@
     <string name="search">Pesquisar</string>
     <string name="clear">Limpar</string>
     <string name="share">Compartilhar</string>
+    <string name="order_by">Ordenado por: %1$s</string>
     <string name="order">Ordenar</string>
     <string name="ok">OK</string>
     <string name="menu">Menu</string>
     <string name="atention">Atenção!</string>
     <string name="loading">Carregando</string>
+    <string name="created">Criado: %1$s</string>
+    <string name="edited">Editado: %1$s</string>
     <string name="create_note">Criar nota</string>
     <string name="search_note">Pesquisar por nota</string>
     <string name="search_results">Resultados para "%1$s"</string>

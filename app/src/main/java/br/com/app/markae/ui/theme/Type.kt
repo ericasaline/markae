@@ -75,5 +75,12 @@ val Typography = Typography(
 		fontSize = 16.sp,
 		lineHeight = 16.sp,
 		letterSpacing = 0.5.sp
+	),
+	displaySmall = TextStyle(
+		fontFamily = fontLight,
+		fontWeight = FontWeight.ExtraLight,
+		fontSize = 10.sp,
+		lineHeight = 10.sp,
+		letterSpacing = 0.5.sp
 	)
 )

@@ -22,6 +22,7 @@ import br.com.app.markae.ui.screen.component.FABMenuComponent
 import br.com.app.markae.ui.screen.component.GridNotesComponent
 import br.com.app.markae.ui.screen.component.LoadingGrid
 import br.com.app.markae.ui.screen.component.NoNoteComponent
+import br.com.app.markae.ui.screen.component.OrderTextComponent
 import br.com.app.markae.ui.screen.component.SearchNoteComponent
 import br.com.app.markae.ui.screen.component.TopBarNoActionComponent
 
@@ -78,28 +79,9 @@ fun ListNotesScreen(
 											onItemClick = { n -> query = n.title },
 											onClearQuery = { query = "" }
 										)
-//										Row(
-//											modifier = Modifier
-//												.fillMaxWidth()
-//												.padding(top = 16.dp),
-//											verticalAlignment = Alignment.CenterVertically,
-//											content = {
-//												Spacer(modifier = Modifier.weight(1f))
-//												Text(
-//													style = MaterialTheme.typography.bodySmall,
-//													text = stringResource(R.string.order)
-//												)
-//												IconButton(
-//													content = {
-//														Icon(
-//															imageVector = Icons.AutoMirrored.Filled.Sort,
-//															contentDescription = stringResource(R.string.order)
-//														)
-//													},
-//													onClick = {}
-//												)
-//											}
-//										)
+
+										OrderTextComponent()
+
 										GridNotesComponent(
 											notes = filteredNotes,
 											onClickNote = { id -> onClickNote(id) }

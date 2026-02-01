@@ -53,10 +53,20 @@ class NoteViewModel(
 		content: String,
 		isPinned: Boolean
 	) = viewModelScope.launch {
-		val noteId = id?.takeIf { it.isNotEmpty() }
-		val note = Note(id = noteId, title = title, content = content, pinned = isPinned)
-
 		_addAction.emit(ViewState.Loading)
+
+		val noteId = id?.takeIf { it.isNotEmpty() }
+		val existingNote = (_note.value as? ViewState.Success)?.data
+		val note = Note(
+			id = noteId,
+			title = title,
+			content = content,
+			pinned = isPinned,
+			createdAt = existingNote?.createdAt ?: System.currentTimeMillis(),
+			updatedAt = if (noteId != null) System.currentTimeMillis() else null
+		)
+
+		Log.i("INFO", "Note: $note")
 
 		val operation: suspend (Note) -> Result<Unit> = { n ->
 			if (id.isNullOrEmpty()) insertNoteUseCase(n) else updateNoteUseCase(n)

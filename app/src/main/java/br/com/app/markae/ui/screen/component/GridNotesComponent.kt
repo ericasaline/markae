@@ -25,9 +25,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import br.com.app.markae.R
+import br.com.app.markae.common.utils.formatDate
 import br.com.app.markae.domain.model.Note
 
 @Composable
@@ -47,6 +49,8 @@ fun GridNotesComponent(
 					title = note.title,
 					content = note.content,
 					isNotePinned = note.pinned,
+					createdAt = note.createdAt,
+					updatedAt = note.updatedAt,
 					onClickNote = {
 						onClickNote.invoke(note.id.toString())
 					}
@@ -61,6 +65,8 @@ private fun CardNote(
 	title: String,
 	content: String,
 	isNotePinned: Boolean,
+	createdAt: Long,
+	updatedAt: Long? = null,
 	onClickNote: () -> Unit
 ) {
 	Card(
@@ -80,14 +86,15 @@ private fun CardNote(
 						verticalAlignment = Alignment.CenterVertically,
 						content = {
 							Text(
-								modifier = Modifier.padding(end = 8.dp),
+								modifier = Modifier
+									.weight(1f)
+									.padding(end = 8.dp),
 								text = title,
 								style = MaterialTheme.typography.labelMedium,
 								maxLines = 1,
 								overflow = TextOverflow.Ellipsis
 							)
 							if (isNotePinned) {
-								Spacer(Modifier.weight(1f))
 								Icon(
 									modifier = Modifier.size(16.dp),
 									imageVector = Icons.Filled.PushPin,
@@ -98,9 +105,20 @@ private fun CardNote(
 					)
 					Spacer(modifier = Modifier.height(8.dp))
 					Text(
+						modifier = Modifier.weight(1f),
 						text = content,
 						style = MaterialTheme.typography.bodySmall,
 						overflow = TextOverflow.Ellipsis
+					)
+					Spacer(modifier = Modifier.height(16.dp))
+					Text(
+						modifier = Modifier.fillMaxWidth(),
+						text = updatedAt?.let { stringResource(R.string.edited, formatDate(it)) }
+							?: stringResource(R.string.created, formatDate(createdAt)),
+						textAlign = TextAlign.End,
+						style = MaterialTheme.typography.displaySmall,
+						overflow = TextOverflow.Ellipsis,
+						maxLines = 1
 					)
 				}
 			)
