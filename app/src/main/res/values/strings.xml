@@ -3,6 +3,7 @@
     <string name="title">Título</string>
     <string name="content">Conteúdo</string>
     <string name="back">Voltar</string>
+    <string name="none">Nenhum</string>
     <string name="unpin">Desfixar</string>
     <string name="pin">Fixar</string>
     <string name="save">Salvar</string>
@@ -13,14 +14,18 @@
     <string name="search">Pesquisar</string>
     <string name="clear">Limpar</string>
     <string name="share">Compartilhar</string>
-    <string name="order_by">Ordenado por: %1$s</string>
+    <string name="order_by_">Ordenado por: %1$s</string>
+    <string name="order_by">Ordenar por:</string>
     <string name="order">Ordenar</string>
+    <string name="clear_order">Limpar</string>
     <string name="ok">OK</string>
     <string name="menu">Menu</string>
     <string name="atention">Atenção!</string>
     <string name="loading">Carregando</string>
     <string name="created">Criado: %1$s</string>
+    <string name="created_at">Criação</string>
     <string name="edited">Editado: %1$s</string>
+    <string name="edited_at">Edição</string>
     <string name="create_note">Criar nota</string>
     <string name="search_note">Pesquisar por nota</string>
     <string name="search_results">Resultados para "%1$s"</string>

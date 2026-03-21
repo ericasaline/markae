@@ -7,6 +7,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -25,15 +26,19 @@ import br.com.app.markae.ui.screen.component.NoNoteComponent
 import br.com.app.markae.ui.screen.component.OrderTextComponent
 import br.com.app.markae.ui.screen.component.SearchNoteComponent
 import br.com.app.markae.ui.screen.component.TopBarNoActionComponent
+import br.com.app.markae.ui.screen.model.SortOption
 
 @Composable
 fun ListNotesScreen(
 	onClickNote: (String) -> Unit,
 	onClickCreateNote: () -> Unit,
 	onClickDeleteAll: () -> Unit,
+	onClickSortOption: (SortOption) -> Unit,
 	notes: ViewState<List<Note>?>
 ) {
-	var showDialog = remember { mutableStateOf(false) }
+	val showDialog = remember { mutableStateOf(false) }
+	val showOrderTextComponent = remember { mutableStateOf(false) }
+	val sortOption = remember { mutableIntStateOf(R.string.none) }
 
 	Scaffold(
 		topBar = { TopBarNoActionComponent() },
@@ -41,7 +46,11 @@ fun ListNotesScreen(
 			FABMenuComponent(
 				onCreateClick = { onClickCreateNote() },
 				onDeleteAllClick = { showDialog.value = true },
-				onOrderClick = {}
+				onSortOptionClick = { option ->
+					onClickSortOption(option)
+					showOrderTextComponent.value = true
+					sortOption.intValue = option.label
+				}
 			)
 		},
 		content = { paddingValues ->
@@ -79,9 +88,15 @@ fun ListNotesScreen(
 											onItemClick = { n -> query = n.title },
 											onClearQuery = { query = "" }
 										)
-
-										OrderTextComponent()
-
+										if (showOrderTextComponent.value) {
+											OrderTextComponent(
+												clearSortOption = {
+													showOrderTextComponent.value = false
+													onClickSortOption(SortOption.NONE)
+												},
+												orderBy = stringResource(sortOption.intValue)
+											)
+										}
 										GridNotesComponent(
 											notes = filteredNotes,
 											onClickNote = { id -> onClickNote(id) }
@@ -106,6 +121,7 @@ private fun HomeScreenPreview() {
 		notes = ViewState.Error(),
 		onClickNote = {},
 		onClickCreateNote = {},
-		onClickDeleteAll = {}
+		onClickDeleteAll = {},
+		onClickSortOption = {}
 	)
 }

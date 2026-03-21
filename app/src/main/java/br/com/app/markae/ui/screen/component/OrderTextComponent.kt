@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Sort
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -18,7 +18,10 @@ import androidx.compose.ui.unit.dp
 import br.com.app.markae.R
 
 @Composable
-fun OrderTextComponent() {
+fun OrderTextComponent(
+	orderBy: String,
+	clearSortOption: () -> Unit
+) {
 	Row(
 		modifier = Modifier
 			.fillMaxWidth()
@@ -28,16 +31,16 @@ fun OrderTextComponent() {
 			Spacer(modifier = Modifier.weight(1f))
 			Text(
 				style = MaterialTheme.typography.bodySmall,
-				text = stringResource(R.string.order_by, "AAAAAAAAAAAAAAAAAA")
+				text = stringResource(R.string.order_by_, orderBy)
 			)
 			IconButton(
 				content = {
 					Icon(
-						imageVector = Icons.AutoMirrored.Filled.Sort,
-						contentDescription = stringResource(R.string.order_by, "AAAAAAAAAAAA")
+						imageVector = Icons.Default.Clear,
+						contentDescription = stringResource(R.string.clear_order)
 					)
 				},
-				onClick = {}
+				onClick = { clearSortOption.invoke() }
 			)
 		}
 	)

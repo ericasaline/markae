@@ -40,15 +40,10 @@ fun MarkaeNavGraph() {
 
 			ListNotesScreen(
 				notes = listNotesViewModel.notes.collectAsStateWithLifecycle().value,
-				onClickNote = { id ->
-					navController.navigate(route = NOTE_SCREEN.replace("{id}", id))
-				},
-				onClickCreateNote = {
-					navController.navigate(route = NOTE_SCREEN.replace("{id}", ""))
-				},
-				onClickDeleteAll = {
-					listNotesViewModel.deleteAllNotes()
-				}
+				onClickNote = { id -> navController.navigate(route = NOTE_SCREEN.replace("{id}", id)) },
+				onClickCreateNote = { navController.navigate(route = NOTE_SCREEN.replace("{id}", "")) },
+				onClickDeleteAll = { listNotesViewModel.deleteAllNotes() },
+				onClickSortOption = { option -> listNotesViewModel.orderNotesBy(sortOption = option) }
 			)
 		}
 
@@ -77,18 +72,10 @@ fun MarkaeNavGraph() {
 			val noteViewModel = koinViewModel<NoteViewModel>()
 
 			NoteScreen(
-				onClickBack = {
-					navController.popBackStack()
-				},
-				onClickPin = {
-					noteViewModel.pinNote()
-				},
-				onClickSave = { title, content, isPinned ->
-					noteViewModel.addNote(title = title, content = content, isPinned = isPinned)
-				},
-				onClickDelete = {
-					noteViewModel.delNote()
-				},
+				onClickBack = { navController.popBackStack() },
+				onClickPin = { noteViewModel.pinNote() },
+				onClickSave = { title, content, isPinned -> noteViewModel.addNote(title = title, content = content, isPinned = isPinned) },
+				onClickDelete = { noteViewModel.delNote() },
 				note = noteViewModel.note.collectAsStateWithLifecycle().value,
 				actionAdd = noteViewModel.addAction.collectAsStateWithLifecycle(initialValue = ViewState.Loading).value,
 				actionDel = noteViewModel.delAction.collectAsStateWithLifecycle(initialValue = ViewState.Loading).value

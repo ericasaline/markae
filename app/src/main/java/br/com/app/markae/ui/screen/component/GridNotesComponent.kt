@@ -115,7 +115,7 @@ private fun CardNote(
 						modifier = Modifier.fillMaxWidth(),
 						text = updatedAt?.let { stringResource(R.string.edited, formatDate(it)) }
 							?: stringResource(R.string.created, formatDate(createdAt)),
-						textAlign = TextAlign.End,
+						textAlign = TextAlign.Start,
 						style = MaterialTheme.typography.displaySmall,
 						overflow = TextOverflow.Ellipsis,
 						maxLines = 1

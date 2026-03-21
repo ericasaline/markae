@@ -45,9 +45,8 @@ fun SearchNoteComponent(
 ) {
 	var expanded by rememberSaveable { mutableStateOf(false) }
 	var query by remember { mutableStateOf("") }
-	val helpList = items.filter { note ->
-		note.title.contains(query, ignoreCase = true) ||
-			note.content.contains(query, ignoreCase = true) }
+	val helpList = items.filter { note -> note.title.contains(query, ignoreCase = true) ||
+		note.content.contains(query, ignoreCase = true) }
 
 	Box(
 		modifier = Modifier.semantics { isTraversalGroup = true },
@@ -72,7 +71,7 @@ fun SearchNoteComponent(
 							)
 						},
 						trailingIcon = {
-							if (query.isNotEmpty()) {
+							if (expanded) {
 								IconButton(
 									onClick = {
 										expanded = false

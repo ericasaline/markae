@@ -37,14 +37,14 @@ fun NoteScreen(
 	actionDel: ViewState<Unit>,
 	note: ViewState<Note?>
 ) {
-	var title = remember { mutableStateOf("") }
-	var content = remember { mutableStateOf("") }
-	var id = remember { mutableStateOf("") }
-	var isPinned = remember { mutableStateOf(false) }
-	var readOnly = remember { mutableStateOf(false) }
+	val title = remember { mutableStateOf("") }
+	val content = remember { mutableStateOf("") }
+	val id = remember { mutableStateOf("") }
+	val isPinned = remember { mutableStateOf(false) }
+	val readOnly = remember { mutableStateOf(false) }
 	val snackbarHostState = remember { SnackbarHostState() }
 	val sheetState = rememberModalBottomSheetState()
-	var showSheet = remember { mutableStateOf(false) }
+	val showSheet = remember { mutableStateOf(false) }
 	val keyboardController = LocalSoftwareKeyboardController.current
 	val focusManager = LocalFocusManager.current
 	val context = LocalContext.current
