@@ -1,5 +1,6 @@
 [versions]
 agp = "8.9.3"
+coreSplashscreen = "1.2.0"
 kotlin = "2.0.21"
 coreKtx = "1.17.0"
 junit = "4.13.2"
@@ -17,6 +18,7 @@ lottie = "6.3.0"
 navigationCompose = "2.9.6"
 
 [libraries]
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
