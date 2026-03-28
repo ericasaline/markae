@@ -74,11 +74,8 @@ fun ListNotesScreen(
 								var query by rememberSaveable { mutableStateOf("") }
 								val sortedNotes = remember(list) { list.sortedByDescending { it.pinned } }
 								val filteredNotes by remember(sortedNotes, query) {
-									derivedStateOf {
-										if (query.isBlank()) sortedNotes
-										else sortedNotes.filter { it.title.contains(query, true) ||
-											it.content.contains(query, true) }
-									}
+									derivedStateOf { if (query.isBlank()) sortedNotes else sortedNotes.filter { it.title.contains(query, true) ||
+											it.content.contains(query, true) } }
 								}
 
 								Column(

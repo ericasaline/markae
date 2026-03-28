@@ -41,12 +41,14 @@ class ListNotesViewModel(
 	}
 
 	fun orderNotesBy(sortOption: SortOption) = viewModelScope.launch {
-		val sortedList = when (sortOption) {
-			SortOption.NONE -> orderNotes
-			SortOption.TITLE -> orderNotes.sortedBy { it.title }
-			SortOption.CREATED_AT -> orderNotes.sortedBy { it.createdAt }
-			SortOption.UPDATED_AT -> orderNotes.sortedBy { it.updatedAt }
+		orderNotes.takeIf { it.isNotEmpty() }?.let { list ->
+			val sortedList = when (sortOption) {
+				SortOption.NONE -> list
+				SortOption.TITLE -> list.sortedBy { it.title.lowercase() }
+				SortOption.CREATED_AT -> list.sortedBy { it.updatedAt }
+				SortOption.UPDATED_AT -> list.sortedBy { it.createdAt }
+			}
+			_notes.value = ViewState.Success(sortedList)
 		}
-		_notes.value = ViewState.Success(sortedList)
 	}
 }

@@ -44,6 +44,7 @@ fun SearchNoteComponent(
 	onClearQuery: () -> Unit = {}
 ) {
 	var expanded by rememberSaveable { mutableStateOf(false) }
+	var iconClose by rememberSaveable { mutableStateOf(false) }
 	var query by remember { mutableStateOf("") }
 	val helpList = items.filter { note -> note.title.contains(query, ignoreCase = true) ||
 		note.content.contains(query, ignoreCase = true) }
@@ -61,7 +62,10 @@ fun SearchNoteComponent(
 					InputField(
 						query = query,
 						onQueryChange = { searchText -> query = searchText },
-						onSearch = { expanded = false },
+						onSearch = {
+							expanded = false
+							iconClose = true
+						},
 						expanded = expanded,
 						onExpandedChange = { expanded = it },
 						leadingIcon = {
@@ -71,10 +75,11 @@ fun SearchNoteComponent(
 							)
 						},
 						trailingIcon = {
-							if (expanded) {
+							if (expanded || iconClose) {
 								IconButton(
 									onClick = {
 										expanded = false
+										iconClose = false
 										query = ""
 										onClearQuery()
 									},
@@ -143,6 +148,7 @@ fun SearchNoteComponent(
 										.clickable {
 											onItemClick.invoke(resultText)
 											expanded = false
+											iconClose = true
 											query = resultText.title
 										}
 										.padding(
