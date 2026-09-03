@@ -230,7 +230,10 @@ fun FABMenuComponent(
 				}
 			)
 			FloatingActionButton(
-				onClick = { expanded = !expanded },
+				onClick = {
+					if (expandedSortOption) expandedSortOption = false
+					expanded = !expanded
+				},
 				containerColor = MaterialTheme.colorScheme.primaryContainer,
 				content = {
 					Icon(
