@@ -18,8 +18,6 @@
 - [x] Compartilhar notas
 - [x] Fixar notas ao topo da lista
 - [x] Ordenar Lista
-- [ ] Testes Unitários
-- [ ] Testes Instrumentados
 
 ## ⚗️ Tecnologias utilizadas:
 - Jetpack Compose
